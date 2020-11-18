@@ -25,6 +25,8 @@ Note: If the quantity is greater than the amount of permutations possible with t
 * **Generator:** Handles string generation.
 
 ## Remarks
+You have the option to parallelize the string generation for randomly generated strings. See the commented code in Generator.
+
 The implementation should be straightforward enough so that you can modify the settings to fit your needs, such as including capital letters.
 
 The library used for randomization is psuedo-random so it is not safe for your encrypting needs. Not that you would use a stranger's code to encrypt anything, right?
