@@ -151,7 +151,7 @@ public final class Settings {
 			if(qty < 1) { System.out.println("Qty. too small."); }
 			else { Settings.qty = qty; }
 		} catch(NumberFormatException e) {
-			System.out.print("Error reading settings (qty. outputs).");
+			System.out.println("Error setting settings (qty. outputs).");
 		}
 	}
 
@@ -167,7 +167,7 @@ public final class Settings {
 			if(length < 1) { System.out.println("Length too small."); }
 			else { Settings.length = length; }
 		} catch(NumberFormatException e) {
-			System.out.print("Error reading settings (length). Enter an integer: ");
+			System.out.println("Error settings settings (length).");
 		}
 	}
 
@@ -181,11 +181,11 @@ public final class Settings {
 
 	public static void setCore(String input) {
 		if(input.length() < length) {
-			String core = "\"" + input + "\"";
+			String core = input;
 			Settings.core = core;
 		}
 		else {
-			System.out.print("Error reading settings (core). The new core is too long.");
+			System.out.println("Error setting settings (core). The new core is too long.");
 		}
 
 		

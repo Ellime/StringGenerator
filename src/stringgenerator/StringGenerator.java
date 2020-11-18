@@ -55,7 +55,7 @@ public class StringGenerator {
 				Settings.setLength(input);
 			}
 			else if(option == 5) {
-				System.out.print("Enter the new core (without quotes): ");
+				System.out.print("Enter the new core with quotes (\"\" for no core): ");
 				input = user.next();
 				Settings.setCore(input);
 			}
@@ -65,7 +65,7 @@ public class StringGenerator {
 			else if(option == 8) { Settings.saveSettings(); }
 			else if(option == 9) { Settings.loadSettings(); }
 			else {
-				System.out.println("Closing program.");
+				System.out.println("PROGRAM CLOSED");
 				break;
 			}
 			System.out.println();
