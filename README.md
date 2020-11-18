@@ -29,6 +29,4 @@ The implementation should be straightforward enough so that you can modify the s
 
 The library used for randomization is psuedo-random so it is not safe for your encrypting needs. Not that you would use a stranger's code to encrypt anything, right?
 
-Looking to add parallelization to speed up generation.
-
 Licensed under GPL-3.0.
