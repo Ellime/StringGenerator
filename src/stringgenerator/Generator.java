@@ -6,6 +6,7 @@ package stringgenerator;
  */
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +47,6 @@ public class Generator {
 	public static String generateRandomString() throws InterruptedException {
 		int length = Settings.getLength();
 		String output = Settings.getCore();
-		int toGenerate = length - output.length();
 		
 		/*
 		 * The commented out block is an alternative implementation to parallelize the assigning of chars to a string.
@@ -80,7 +80,7 @@ public class Generator {
 		 * The following is the sequential implementation of assigning chars to a string.
 		 * Comment this for-loop out if you wish to use the parallel implementation.
 		 */
-		for(int i = 0; i < toGenerate; i++) {
+		for(int i = 0; i < length; i++) {
 			char c = generateRandomChar(); // Parallelize here?
 			output += c; // Shared resource
 		}
@@ -91,27 +91,31 @@ public class Generator {
 	public static int[] generateIterationIndices(int itr) {
 		// Input: iterator value
 		// Converts iterator into an array of ints to be used to index the range of chars
-		int base = availableChars.length();
+		// Iterator is first converted from decimal to the right base
+		
 		int length = Settings.getLength();
-		String indicesString = Integer.toString(itr, base);
-		
-		// Pad indicesString with leading zeros
-		int remaining = length - indicesString.length();
-		for(int i = 0; i < remaining; i++) {
-			indicesString = "0" + indicesString;
-		}
-		
-		// Conversion to array
 		int indices[] = new int[length];
+		int base = availableChars.length();
+		double remainder = itr;
+		
 		for(int i = 0; i < length; i++) {
-			String c = Character.toString(indicesString.charAt(i));
-			indices[i] = Integer.parseInt(c, base);
+			remainder /= base;
+			// Using BigDecimal to separate the remainder
+			double d = new BigDecimal(remainder - Math.floor(remainder)).doubleValue();
+			indices[i] = (int) Math.round(base * d);
+			// Prepare remainder for next iteration
+			remainder = Math.floor(remainder);
 		}
 		
 		return indices;
 	}
 	
 	public static String generateIterationString(int[] indices) {
+		/*
+		 * Converts an array of indices into a string.
+		 * Returns the string.
+		 */
+		
 		int length = Settings.getLength();
 		String output = Settings.getCore();
 		
@@ -128,7 +132,7 @@ public class Generator {
 
 		// Check chars contains chars to iterate with
 		if(availableChars.length() == 0) {
-			System.out.println("No chars have been selected to generate with - cannot generate.");
+			System.out.println("You set the length to 0! What do you expect to generate?");
 			return;
 		}
 		
@@ -137,6 +141,7 @@ public class Generator {
 		String generationType = Settings.getGenerationType();
 		
 		if(generationType.equalsIgnoreCase("random")) {
+			// Generate strings through randomness
 			for(int i = 0; i < qty; i++) {
 				try {
 					output[i] = generateRandomString();
@@ -151,16 +156,23 @@ public class Generator {
 			// Create starting iteration value
 			int itr = 0;
 			int indices[];
+			int base = availableChars.length();
+			double permutations = Math.pow(base, Settings.getLength());
 			
+			// Generate strings through iteration
 			for(int i = 0; i < qty; i++) {
 				indices = generateIterationIndices(itr);
 				output[i] = generateIterationString(indices);
 				itr++;
+				if(itr >= permutations) { itr = 0; } // Loop back to beginning
 			}
 		}
 	}
 	
 	public static void saveOutput() {
+		/*
+		 * Sends the generated strings to a file.
+		 */
 		String newline = System.getProperty("line.separator");
 		try {
 			FileWriter strings = new FileWriter(filename, false);

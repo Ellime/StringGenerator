@@ -12,7 +12,7 @@ public final class Settings {
 	private static String generationType = "random"; // Choices: random, iteration
 	private static int qty = 1; // Qty. of strings to output
 	private static int length = 5; // Length of strings to output
-	private static String core = "\"\""; // A string to include in the output. Core is inserted at index 0.
+	private static String core = ""; // A string to include in the output. Core is inserted at index 0.
 	private static String letters = "on"; // Choices: on, off
 	private static String numbers = "on"; // Choices: on, off
 	
@@ -56,7 +56,7 @@ public final class Settings {
 			// core
 			String c = reader.nextLine();
 			int l = c.length() - 2;
-			if(l >= length) {
+			if(l < 0) {
 				System.out.println("Error reading settings (core). Default is no core.");
 			}
 			else {
@@ -180,15 +180,8 @@ public final class Settings {
 
 
 	public static void setCore(String input) {
-		if(input.length() < length) {
-			String core = input;
-			Settings.core = core;
-		}
-		else {
-			System.out.println("Error setting settings (core). The new core is too long.");
-		}
-
-		
+		// Sets the core, including surrounding chars
+		Settings.core = input;	
 	}
 
 

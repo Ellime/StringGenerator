@@ -41,7 +41,7 @@ public class StringGenerator {
 				Generator.setChars();
 				Generator.generateOutput();
 				Generator.saveOutput();
-			} // TODO: Rewrite setters so input received in this thread
+			}
 			else if(option == 1) { Settings.printSettings(); }
 			else if(option == 2) { Settings.setGenerationType(); }
 			else if(option == 3) {
