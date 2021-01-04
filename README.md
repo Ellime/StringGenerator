@@ -1,5 +1,5 @@
 # StringGenerator
-A little tool to generate random or iterated strings.
+A little tool to generate random or iterated strings. Written in Java SE 8.
 
 ## Usage
 This command-line-based program generates strings for you. You can choose how to generate the strings, how many strings to generate, and a few other things.
